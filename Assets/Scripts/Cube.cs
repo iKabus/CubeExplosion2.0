@@ -8,10 +8,16 @@ public class Cube : MonoBehaviour
     private float _maxChanceSplit = 100f;
 
     public float CurrentChance { get; private set; } = 100f;
+    public float CurrentExpolosionParametr { get; private set; } = 1f;
 
     public void SetChance(float parentChance)
     {
         CurrentChance = parentChance / _divider;
+    }
+
+    public void SetExplosionParametr(float parentExplosionParametr)
+    {
+        CurrentExpolosionParametr = parentExplosionParametr * _divider;
     }
 
     public bool CanSplit()

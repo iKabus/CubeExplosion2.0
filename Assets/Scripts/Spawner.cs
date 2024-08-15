@@ -17,7 +17,10 @@ public class Spawner : MonoBehaviour
             {
                 Create();
             }
-
+        }
+        else
+        {
+            _destruction.MultiplierExplosion(_cube.CurrentExpolosionParametr);
             _destruction.Explode();
         }
 
@@ -29,9 +32,8 @@ public class Spawner : MonoBehaviour
         Cube cube = Instantiate(_cube);
 
         cube.SetChance(_cube.CurrentChance);
+        cube.SetExplosionParametr(_cube.CurrentExpolosionParametr);
         cube.ChangeColor();
         cube.ChangeScale();
-
-        _destruction.AddToHits(cube);
     }
 }
