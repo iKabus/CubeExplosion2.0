@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
+    public event Action Clicked;
+
     private float _divider = 2f;
 
     private float _minChanceSplit = 0f;
@@ -10,35 +13,48 @@ public class Cube : MonoBehaviour
     public float CurrentChance { get; private set; } = 100f;
     public float CurrentExpolosionParametr { get; private set; } = 1f;
 
-    public void SetChance(float parentChance)
-    {
-        CurrentChance = parentChance / _divider;
-    }
-
-    public void SetExplosionParametr(float parentExplosionParametr)
-    {
-        CurrentExpolosionParametr = parentExplosionParametr * _divider;
-    }
-
     public bool CanSplit()
     {
-        float chance = Random.Range(_minChanceSplit, _maxChanceSplit);
+        float chance = UnityEngine.Random.Range(_minChanceSplit, _maxChanceSplit);
 
         return CurrentChance >= chance;
     }
 
-    public void ChangeColor()
+    public void Initialize(float parentChance, float parentExplosionParametr)
+    {
+        SetChance(parentChance);
+        SetExplosionParametr(parentExplosionParametr);
+        ChangeColor();
+        ChangeScale();
+    }
+
+    private void SetChance(float parentChance)
+    {
+        CurrentChance = parentChance / _divider;
+    }
+
+    private void SetExplosionParametr(float parentExplosionParametr)
+    {
+        CurrentExpolosionParametr = parentExplosionParametr * _divider;
+    }
+
+    private void ChangeColor()
     {
         if (TryGetComponent<Renderer>(out Renderer component))
         {
-            component.material.color = Random.ColorHSV();
+            component.material.color = UnityEngine.Random.ColorHSV();
         }
     }
 
-    public void ChangeScale()
+    private void ChangeScale()
     {
         int scaleChange = 2;
 
         transform.localScale /= scaleChange;
+    }
+
+    private void OnMouseUpAsButton()
+    {
+        Clicked?.Invoke();
     }
 }

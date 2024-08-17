@@ -5,11 +5,21 @@ public class Spawner : MonoBehaviour
     [SerializeField] private Explosion _destruction;
     [SerializeField] private Cube _cube;
 
-    private void OnMouseUpAsButton()
+    private void OnEnable()
     {
-        int minNumber = 2;
-        int maxNumber = 7;
-        int cubeNumber = Random.Range(minNumber, maxNumber);
+        _cube.Clicked += Clicked;
+    }
+
+    private void OnDisable()
+    {
+        _cube.Clicked -= Clicked;
+    }
+
+    private void Clicked()
+    {
+        int minLimit = 2;
+        int maxLimit = 7;
+        int cubeNumber = Random.Range(minLimit, maxLimit);
 
         if (_cube.CanSplit())
         {
@@ -20,7 +30,7 @@ public class Spawner : MonoBehaviour
         }
         else
         {
-            _destruction.MultiplierExplosion(_cube.CurrentExpolosionParametr);
+            _destruction.Increase(_cube.CurrentExpolosionParametr);
             _destruction.Explode();
         }
 
@@ -31,9 +41,6 @@ public class Spawner : MonoBehaviour
     {
         Cube cube = Instantiate(_cube);
 
-        cube.SetChance(_cube.CurrentChance);
-        cube.SetExplosionParametr(_cube.CurrentExpolosionParametr);
-        cube.ChangeColor();
-        cube.ChangeScale();
+        cube.Initialize(_cube.CurrentChance, _cube.CurrentExpolosionParametr);
     }
 }

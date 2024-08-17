@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
-    public float ExplosionForce { get; private set; } = 20f;
-    public float ExplosionRadius { get; private set; } = 20f;
+    public float Force { get; private set; } = 20f;
+    public float Radius { get; private set; } = 20f;
 
     public void Explode()
     {
-        foreach (Rigidbody explodableObject in GetExplodableObgect())
+        foreach (Rigidbody explodableObject in GetExplodableObject())
         {
-            explodableObject.AddExplosionForce(ExplosionForce, transform.position, ExplosionRadius);
+            explodableObject.AddExplosionForce(Force, transform.position, Radius);
         }
     }
 
-    public void MultiplierExplosion(float currentExpolosionParametr)
+    public void Increase(float currentParametr)
     {
-        ExplosionForce *= currentExpolosionParametr;
-        ExplosionRadius *= currentExpolosionParametr;
+        Force *= currentParametr;
+        Radius *= currentParametr;
     }
 
-    private List<Rigidbody> GetExplodableObgect()
+    private List<Rigidbody> GetExplodableObject()
     {
         float radius = 10f;
 
